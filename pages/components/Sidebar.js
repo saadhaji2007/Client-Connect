@@ -14,6 +14,9 @@ export default function Sidebar() {
         <li className="flex items-center gap-2 text-gray-600 hover:text-blue-600 cursor-pointer">
           <FaFileInvoice /> Invoices
         </li>
+        <li>
+          <a href="/stats" className="hover:text-blue-600">📈 Stats</a>
+        </li>
       </ul>
     </div>
   );

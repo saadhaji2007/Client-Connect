@@ -1,19 +1,26 @@
-// components/ClientModal.js
 import { useState, useEffect } from "react";
 
-export default function ClientModal({ isOpen, onClose, onSave, mode = "add", initialData = {} }) {
+export default function ClientModal({ isOpen, onClose, onSave, mode, initialData }) {
   const [formData, setFormData] = useState({
     name: "",
     company: "",
     email: "",
     phone: "",
-    status: "In Discussion"
+    status: "In Discussion",
   });
 
-  // 🔁 When editing, pre-fill the form
+  // 👇 When editing, populate form with client data
   useEffect(() => {
     if (mode === "edit" && initialData) {
       setFormData(initialData);
+    } else {
+      setFormData({
+        name: "",
+        company: "",
+        email: "",
+        phone: "",
+        status: "In Discussion",
+      });
     }
   }, [mode, initialData]);
 
@@ -23,18 +30,19 @@ export default function ClientModal({ isOpen, onClose, onSave, mode = "add", ini
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(formData);  // ✅ Calls either add or update
+    onSave(formData); // ✅ Correct function name
     onClose();
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 backdrop-blur-sm bg-black/20 flex justify-center items-center z-50">
+    <div className="fixed inset-0 backdrop-blur-sm bg-black/30 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md">
         <h2 className="text-xl font-bold mb-4">
           {mode === "edit" ? "Edit Client" : "Add New Client"}
         </h2>
+
         <form onSubmit={handleSubmit} className="space-y-3">
           <input
             className="w-full p-2 border rounded"
@@ -55,8 +63,8 @@ export default function ClientModal({ isOpen, onClose, onSave, mode = "add", ini
           <input
             className="w-full p-2 border rounded"
             name="email"
-            placeholder="Email"
             type="email"
+            placeholder="Email"
             value={formData.email}
             onChange={handleChange}
             required
@@ -70,8 +78,8 @@ export default function ClientModal({ isOpen, onClose, onSave, mode = "add", ini
             required
           />
           <select
-            name="status"
             className="w-full p-2 border rounded"
+            name="status"
             value={formData.status}
             onChange={handleChange}
           >
@@ -80,7 +88,7 @@ export default function ClientModal({ isOpen, onClose, onSave, mode = "add", ini
             <option>Completed</option>
           </select>
 
-          <div className="flex justify-between">
+          <div className="flex justify-between pt-2">
             <button
               type="button"
               onClick={onClose}
@@ -92,7 +100,7 @@ export default function ClientModal({ isOpen, onClose, onSave, mode = "add", ini
               type="submit"
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
             >
-              {mode === "edit" ? "Update" : "Add Client"}
+              {mode === "edit" ? "Update" : "Add"}
             </button>
           </div>
         </form>
@@ -100,3 +108,4 @@ export default function ClientModal({ isOpen, onClose, onSave, mode = "add", ini
     </div>
   );
 }
+
