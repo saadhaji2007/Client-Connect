@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
-import Sidebar from "./components/Sidebar";
-import Topbar from "./components/topbar";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { PieChart, Pie, Cell, Legend, ResponsiveContainer } from "recharts";
+import Sidebar from "./components/Sidebar";
+import Topbar from "./components/topbar";
 
-const COLORS = ["#34D399", "#60A5FA", "#FBBF24", "#F87171"];
-
-export default function StatsPage() {
+export default function StatPage() {
   const [clients, setClients] = useState([]);
 
   useEffect(() => {
@@ -19,66 +16,53 @@ export default function StatsPage() {
       }));
       setClients(data);
     };
+
     fetchClients();
   }, []);
 
-  const total = clients.length;
-  const inDiscussion = clients.filter((c) => c.status === "In Discussion").length;
-  const active = clients.filter((c) => c.status === "Active").length;
-  const completed = clients.filter((c) => c.status === "Completed").length;
-
-  const pieData = [
-    { name: "In Discussion", value: inDiscussion },
-    { name: "Active", value: active },
-    { name: "Completed", value: completed },
-  ];
+  const totalClients = clients.length;
+  const clientsWithProject = clients.filter((c) => c.project).length;
+  const totalRevenue = clients
+    .filter((c) => c.project)
+    .reduce((sum, c) => sum + parseFloat(c.project.price || 0), 0);
+  const avgProgress =
+    clientsWithProject === 0
+      ? 0
+      : clients
+          .filter((c) => c.project)
+          .reduce((sum, c) => sum + parseFloat(c.project.progress || 0), 0) /
+        clientsWithProject;
 
   return (
     <div className="flex min-h-screen bg-gray-100">
       <Sidebar />
       <div className="flex-1 p-4">
         <Topbar />
+        <h1 className="text-2xl font-bold mb-4">📊 Client Statistics</h1>
 
-        {/* 📊 Counts */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div className="bg-white p-4 rounded-xl shadow text-center">
-            <h2 className="text-2xl font-bold">{total}</h2>
-            <p className="text-gray-500">Total Clients</p>
-          </div>
-          <div className="bg-white p-4 rounded-xl shadow text-center">
-            <h2 className="text-2xl font-bold">{active}</h2>
-            <p className="text-gray-500">Active Clients</p>
-          </div>
-          <div className="bg-white p-4 rounded-xl shadow text-center">
-            <h2 className="text-2xl font-bold">{completed}</h2>
-            <p className="text-gray-500">Completed Projects</p>
-          </div>
-        </div>
-
-        {/* 📈 Graph */}
-        <div className="bg-white p-6 rounded-xl shadow">
-          <h2 className="text-xl font-semibold mb-4">Client Status Breakdown</h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={pieData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={100}
-                fill="#8884d8"
-                label
-              >
-                {pieData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Legend />
-            </PieChart>
-          </ResponsiveContainer>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <StatCard label="Total Clients" value={totalClients} color="blue" />
+          <StatCard label="With Projects" value={clientsWithProject} color="green" />
+          <StatCard label="Total Revenue (₹)" value={totalRevenue} color="purple" />
+          <StatCard label="Avg Progress (%)" value={avgProgress.toFixed(1)} color="orange" />
         </div>
       </div>
+    </div>
+  );
+}
+
+function StatCard({ label, value, color }) {
+  const colors = {
+    blue: "bg-blue-500",
+    green: "bg-green-500",
+    purple: "bg-purple-500",
+    orange: "bg-orange-500",
+  };
+
+  return (
+    <div className={`p-6 rounded-xl shadow text-white ${colors[color]}`}>
+      <h3 className="text-sm font-medium mb-1">{label}</h3>
+      <p className="text-2xl font-bold">{value}</p>
     </div>
   );
 }

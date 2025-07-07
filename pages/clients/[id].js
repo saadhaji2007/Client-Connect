@@ -4,6 +4,8 @@ import { db } from "../../firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/topbar";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase";
 
 export default function ClientDetailsPage() {
   const router = useRouter();
@@ -18,6 +20,17 @@ export default function ClientDetailsPage() {
     progress: ""
   });
 
+  // ✅ Auth protection
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        router.push("/login");
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  // Fetch client
   useEffect(() => {
     if (id) {
       const fetchClient = async () => {
