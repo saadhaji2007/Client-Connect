@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "file-saver": "^2.0.5",
     "firebase": "^11.10.0",
     "mongoose": "^8.16.1",
     "next": "15.3.5",
