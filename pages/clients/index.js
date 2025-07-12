@@ -4,6 +4,8 @@ import Topbar from "../components/topbar";
 import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { saveAs } from "file-saver";
+import jsPDF from "jspdf";
+import Link from "next/link";
 
 export default function ClientSummaryPage() {
   const [clients, setClients] = useState([]);
@@ -20,15 +22,34 @@ export default function ClientSummaryPage() {
     fetchClients();
   }, []);
 
-  const handleDownloadInvoice = (client) => {
-    const blob = new Blob(
-      [
-        `Invoice for ${client.name}\nProject: ${client.project?.title}\nAmount: ₹${client.project?.price}`,
-      ],
-      { type: "text/plain;charset=utf-8" }
-    );
-    saveAs(blob, `${client.name}_invoice.txt`);
-  };
+  // const handleDownloadInvoice = (client) => {
+  //   const blob = new Blob(
+  //     [
+  //       `Invoice for ${client.name}\nProject: ${client.project?.title}\nAmount: ₹${client.project?.price}`,
+  //     ],
+  //     { type: "text/plain;charset=utf-8" }
+  //   );
+  //   saveAs(blob, `${client.name}_invoice.txt`);
+  // };
+const handleDownloadInvoice = (client) => {
+  const doc = new jsPDF();
+
+  doc.setFontSize(18);
+  doc.text("Client Connect - Project Invoice", 20, 20);
+
+  doc.setFontSize(12);
+  doc.text(`Client Name: ${client.name}`, 20, 40);
+  doc.text(`Email: ${client.email}`, 20, 50);
+  doc.text(`Project Title: ${client.project?.title}`, 20, 60);
+  doc.text(`Price: ₹${client.project?.price}`, 20, 70);
+  doc.text(`Payment Due: ${client.project?.paymentDue}`, 20, 80);
+  doc.text(`Progress: ${client.project?.progress}%`, 20, 90);
+
+  doc.text("Thank you for working with us!", 20, 110);
+
+  doc.save(`Invoice_${client.name}.pdf`);
+};
+
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -52,7 +73,9 @@ export default function ClientSummaryPage() {
             <tbody>
               {clients.map((client) => (
                 <tr key={client.id} className="border-b hover:bg-gray-50 text-sm">
-                  <td className="p-3 font-medium">{client.name}</td>
+                  <td className="p-3 font-medium">
+                    <Link href={`/clients/${client.id}`}>{client.name}</Link>
+                  </td>
                   <td className="p-3">
                     {client.project?.title || <span className="text-gray-400">—</span>}
                   </td>
@@ -78,12 +101,19 @@ export default function ClientSummaryPage() {
                   </td>
                   <td className="p-3">
                     {client.project?.progress === "100" ? (
+                      // <button
+                      //   onClick={() => handleDownloadInvoice(client)}
+                      //   className="text-blue-600 hover:underline text-sm"
+                      // >
+                      //   Download
+                      // </button>
                       <button
-                        onClick={() => handleDownloadInvoice(client)}
-                        className="text-blue-600 hover:underline text-sm"
-                      >
-                        Download
-                      </button>
+  onClick={() => handleDownloadInvoice(client)}
+  className="text-blue-600 hover:underline text-sm"
+>
+  Download Invoice
+</button>
+
                     ) : (
                       <span className="text-gray-400">Not Ready</span>
                     )}
