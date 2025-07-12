@@ -8,6 +8,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase";
 import jsPDF from "jspdf";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import Footer from "../components/footer"; // adjust path accordingly
+
 
 export default function ClientDetailsPage() {
   const router = useRouter();
@@ -239,3 +241,4 @@ export default function ClientDetailsPage() {
     </div>
   );
 }
+<Footer />

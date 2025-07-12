@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
-import Topbar from "../components/topbar";
+// import Sidebar from "../components/Sidebar";
+// import Topbar from "../components/topbar";
+import Layout from "../components/layout";
 import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { saveAs } from "file-saver";
@@ -52,10 +53,9 @@ const handleDownloadInvoice = (client) => {
 
 
   return (
+    <Layout>
     <div className="flex min-h-screen bg-gray-100">
-      <Sidebar />
       <div className="flex-1 p-4">
-        <Topbar />
         <h2 className="text-2xl font-bold mb-4 text-blue-700">Client Summary</h2>
 
         <div className="overflow-x-auto bg-white rounded-xl shadow">
@@ -132,5 +132,7 @@ const handleDownloadInvoice = (client) => {
         </div>
       </div>
     </div>
+    </Layout>
   );
+  
 }
