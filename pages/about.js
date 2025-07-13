@@ -30,19 +30,18 @@
 //   );
 // }
 
-import Sidebar from "./components/Sidebar";
-import Topbar from "./components/topbar";
-import Footer from "./components/footer";
+// import Sidebar from "./components/Sidebar";
+// import Topbar from "./components/topbar";
+// import Footer from "./components/footer";
 import { FaGithub, FaLinkedin, FaInstagram, FaXTwitter } from "react-icons/fa6";
-import Layout from "../components/layout"; 
+import Layout from "./components/layout"; 
 import Image from "next/image";
 
 export default function About() {
   return (
+    <Layout>
     <div className="flex bg-gray-100 min-h-screen">
-      <Sidebar />
       <div className="flex-1 flex flex-col">
-        <Topbar />
         <main className="flex-grow p-6">
           <div className="bg-white rounded-xl shadow-lg p-8 max-w-4xl mx-auto">
             <h1 className="text-3xl font-bold text-blue-700 mb-4">About ClientConnect</h1>
@@ -101,8 +100,9 @@ export default function About() {
             </div>
           </div>
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </div>
+    </Layout>
   );
 }

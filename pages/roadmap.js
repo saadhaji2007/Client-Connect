@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FaCheckCircle } from "react-icons/fa";
 import RoadmapTimeline from "./roadmap";
+import Layout from "./components/layout"
 
 const roadmap = [
   {
@@ -27,6 +28,7 @@ const roadmap = [
 
 export default function TimelineRoadmap() {
   return (
+    <Layout>
     <div className="bg-white py-16 px-4 sm:px-6 lg:px-24">
       <h2 className="text-3xl font-bold text-center text-purple-600 mb-12">Project Roadmap</h2>
       <div className="relative border-l-4 border-purple-300 pl-6">
@@ -52,5 +54,6 @@ export default function TimelineRoadmap() {
         ))}
       </div>
     </div>
+    </Layout>
   );
 }

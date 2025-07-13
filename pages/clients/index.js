@@ -1,56 +1,169 @@
+// // import { useEffect, useState } from "react";
+// // import Sidebar from "../components/Sidebar";
+// // import Topbar from "../components/topbar";
+// import Layout from "../components/layout";
+// import { db } from "../../firebase";
+// import { collection, getDocs } from "firebase/firestore";
+// import { saveAs } from "file-saver";
+// import jsPDF from "jspdf";
+// import Link from "next/link";
+// import { onAuthStateChanged } from "firebase/auth";
+// import { auth } from "../../firebase"; 
+// import { useRouter } from "next/router";
+// import { useEffect, useState } from "react";
+
+// const [user, setUser] = useState(null);
+// const router = useRouter();
+// export default function ClientSummaryPage() {
+//   const [user, setUser] = useState(null);
+//   const router = useRouter();
+//   const [clients, setClients] = useState([]);
+
+//   useEffect(() => {
+//     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+//       if (!currentUser) {
+//         router.push("/login");
+//       } else {
+//         setUser(currentUser);
+//       }
+//     });
+//     return () => unsubscribe();
+//   }, []);
+
+//   useEffect(() => {
+//     const fetchClients = async () => {
+//       const snapshot = await getDocs(collection(db, "clients"));
+//       const data = snapshot.docs.map((doc) => ({
+//         id: doc.id,
+//         ...doc.data(),
+//       }));
+//       setClients(data);
+//     };
+//     if (user) fetchClients();
+//   }, [user]);
+
+//   if (!user) return <div className="p-6">🔐 Loading...</div>;
+
+
+// // useEffect(() => {
+// //   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+// //     if (!currentUser) {
+// //       router.push("/login"); // 🚫 redirect if not logged in
+// //     } else {
+// //       setUser(currentUser);
+// //     }
+// //   });
+// //   return () => unsubscribe();
+// // }, []);
+
+// // if (!user) return <div className="p-6">🔐 Loading...</div>;
+
+// // export default function ClientSummaryPage() {
+// //   const [clients, setClients] = useState([]);
+
+// //   useEffect(() => {
+// //     const fetchClients = async () => {
+// //       const snapshot = await getDocs(collection(db, "clients"));
+// //       const data = snapshot.docs.map((doc) => ({
+// //         id: doc.id,
+// //         ...doc.data(),
+// //       }));
+// //       setClients(data);
+// //     };
+// //     fetchClients();
+// //   }, []);
+
+// const handleDownloadInvoice = (client) => {
+//   const doc = new jsPDF();
+
+//   doc.setFontSize(18);
+//   doc.text("Client Connect - Project Invoice", 20, 20);
+
+//   doc.setFontSize(12);
+//   doc.text(`Client Name: ${client.name}`, 20, 40);
+//   doc.text(`Email: ${client.email}`, 20, 50);
+//   doc.text(`Project Title: ${client.project?.title}`, 20, 60);
+//   doc.text(`Price: ₹${client.project?.price}`, 20, 70);
+//   doc.text(`Payment Due: ${client.project?.paymentDue}`, 20, 80);
+//   doc.text(`Progress: ${client.project?.progress}%`, 20, 90);
+
+//   doc.text("Thank you for working with us!", 20, 110);
+
+//   doc.save(`Invoice_${client.name}.pdf`);
+// };
+
 import { useEffect, useState } from "react";
-// import Sidebar from "../components/Sidebar";
-// import Topbar from "../components/topbar";
 import Layout from "../components/layout";
 import { db } from "../../firebase";
-import { collection, getDocs } from "firebase/firestore";
-import { saveAs } from "file-saver";
 import jsPDF from "jspdf";
 import Link from "next/link";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase"; 
+import { useRouter } from "next/router";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 export default function ClientSummaryPage() {
+  const [user, setUser] = useState(null);
   const [clients, setClients] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
-    const fetchClients = async () => {
-      const snapshot = await getDocs(collection(db, "clients"));
-      const data = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setClients(data);
-    };
-    fetchClients();
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (!currentUser) {
+        router.push("/login"); // redirect if not logged in
+      } else {
+        setUser(currentUser);
+      }
+    });
+    return () => unsubscribe();
   }, []);
 
-  // const handleDownloadInvoice = (client) => {
-  //   const blob = new Blob(
-  //     [
-  //       `Invoice for ${client.name}\nProject: ${client.project?.title}\nAmount: ₹${client.project?.price}`,
-  //     ],
-  //     { type: "text/plain;charset=utf-8" }
-  //   );
-  //   saveAs(blob, `${client.name}_invoice.txt`);
-  // };
-const handleDownloadInvoice = (client) => {
-  const doc = new jsPDF();
+  useEffect(() => {
+  //   const fetchClients = async () => {
+  //     const snapshot = await getDocs(collection(db, "clients"));
+  //     const data = snapshot.docs.map((doc) => ({
+  //       id: doc.id,
+  //       ...doc.data(),
+  //     }));
+  //     setClients(data);
+  //   };
+  //   fetchClients();
+  // }, []);
+  const fetchClients = async () => {
+    if (!user) return;
 
-  doc.setFontSize(18);
-  doc.text("Client Connect - Project Invoice", 20, 20);
+    const q = query(collection(db, "clients"), where("userId", "==", user.uid));
+    const snapshot = await getDocs(q);
+    const data = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setClients(data);
+  };
 
-  doc.setFontSize(12);
-  doc.text(`Client Name: ${client.name}`, 20, 40);
-  doc.text(`Email: ${client.email}`, 20, 50);
-  doc.text(`Project Title: ${client.project?.title}`, 20, 60);
-  doc.text(`Price: ₹${client.project?.price}`, 20, 70);
-  doc.text(`Payment Due: ${client.project?.paymentDue}`, 20, 80);
-  doc.text(`Progress: ${client.project?.progress}%`, 20, 90);
+  fetchClients();
+}, [user]);
 
-  doc.text("Thank you for working with us!", 20, 110);
 
-  doc.save(`Invoice_${client.name}.pdf`);
-};
+  const handleDownloadInvoice = (client) => {
+    const doc = new jsPDF();
 
+    doc.setFontSize(18);
+    doc.text("Client Connect - Project Invoice", 20, 20);
+
+    doc.setFontSize(12);
+    doc.text(`Client Name: ${client.name}`, 20, 40);
+    doc.text(`Email: ${client.email}`, 20, 50);
+    doc.text(`Project Title: ${client.project?.title}`, 20, 60);
+    doc.text(`Price: ₹${client.project?.price}`, 20, 70);
+    doc.text(`Payment Due: ${client.project?.paymentDue}`, 20, 80);
+    doc.text(`Progress: ${client.project?.progress}%`, 20, 90);
+
+    doc.text("Thank you for working with us!", 20, 110);
+    doc.save(`Invoice_${client.name}.pdf`);
+  };
+
+  if (!user) return <div className="p-6">🔐 Loading...</div>;
 
   return (
     <Layout>
@@ -101,12 +214,6 @@ const handleDownloadInvoice = (client) => {
                   </td>
                   <td className="p-3">
                     {client.project?.progress === "100" ? (
-                      // <button
-                      //   onClick={() => handleDownloadInvoice(client)}
-                      //   className="text-blue-600 hover:underline text-sm"
-                      // >
-                      //   Download
-                      // </button>
                       <button
   onClick={() => handleDownloadInvoice(client)}
   className="text-blue-600 hover:underline text-sm"

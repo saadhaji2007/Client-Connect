@@ -2,13 +2,14 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import Sidebar from "../components/Sidebar";
-import Topbar from "../components/topbar";
+// import Sidebar from "../components/Sidebar";
+// import Topbar from "../components/topbar";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase";
 import jsPDF from "jspdf";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import Footer from "../components/footer"; // adjust path accordingly
+// import Footer from "../components/footer"; // adjust path accordingly
+import Layout from "../components/layout";
 
 
 export default function ClientDetailsPage() {
@@ -93,10 +94,9 @@ export default function ClientDetailsPage() {
   }
 
   return (
+    <Layout>
     <div className="flex min-h-screen bg-gray-100">
-      <Sidebar />
       <div className="flex-1 p-4">
-        <Topbar />
         <div className="bg-white p-6 rounded-xl shadow-lg">
           <h2 className="text-2xl font-bold text-blue-600 mb-2">{client.name}</h2>
           <p className="text-gray-600 mb-1">Company: {client.company}</p>
@@ -239,6 +239,7 @@ export default function ClientDetailsPage() {
       </div>
     {/* Move Project Progress Chart inside main return */}
     </div>
+    </Layout>
   );
 }
-<Footer />
+
