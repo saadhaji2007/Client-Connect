@@ -1,38 +1,3 @@
-// import Sidebar from "./components/Sidebar";
-// import Topbar from "./components/topbar";
-// import Footer from "./components/footer";
-
-// export default function AboutPage() {
-//   return (
-//     <div className="flex min-h-screen bg-gray-100">
-//       <Sidebar />
-//       <div className="flex-1 p-4">
-//         <Topbar />
-//         <div className="bg-white p-8 rounded-xl shadow-md">
-//           <h1 className="text-3xl font-bold text-blue-700 mb-4">About Client Connect</h1>
-//           <p className="text-gray-700 mb-2">
-//             Client Connect is a lightweight client management platform built to streamline your
-//             workflow. Easily manage client information, track project progress, and generate
-//             professional invoices.
-//           </p>
-//           <p className="text-gray-700 mb-2">
-//             This project was built using <span className="font-semibold">Next.js</span>, Firebase,
-//             and Tailwind CSS. The goal is to offer a clean, functional UI with essential client
-//             management features.
-//           </p>
-//           <p className="text-gray-700">
-//             Designed and developed by <span className="font-semibold">Saad Haji</span>.
-//           </p>
-//         </div>
-//         <Footer />
-//       </div>
-//     </div>
-//   );
-// }
-
-// import Sidebar from "./components/Sidebar";
-// import Topbar from "./components/topbar";
-// import Footer from "./components/footer";
 import { FaGithub, FaLinkedin, FaInstagram, FaXTwitter } from "react-icons/fa6";
 import Layout from "./components/layout"; 
 import Image from "next/image";
