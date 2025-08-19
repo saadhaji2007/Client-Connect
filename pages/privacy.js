@@ -1,7 +1,7 @@
 import Head from "next/head";
 // import Footer from "./components/footer";
 import { ShieldCheck, Lock, Users, Settings, AlertTriangle, RefreshCw } from "lucide-react";
-import Layout from "./components/layout";
+import Layout from "../components/layout";
 
 export default function PrivacyPolicy() {
   return (

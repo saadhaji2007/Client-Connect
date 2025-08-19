@@ -1,5 +1,5 @@
 import { FaGithub, FaLinkedin, FaInstagram, FaXTwitter } from "react-icons/fa6";
-import Layout from "./components/layout"; 
+import Layout from "../components/layout"; 
 import Image from "next/image";
 
 export default function About() {

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { FaCheckCircle } from "react-icons/fa";
 import RoadmapTimeline from "./roadmap";
-import Layout from "./components/layout"
+import Layout from "../components/layout"
 
 const roadmap = [
   {

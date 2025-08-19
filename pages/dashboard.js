@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 // import Sidebar from "./components/Sidebar";
 // import Topbar from "./components/topbar";
-import ClientCard from "./components/ClientCard";
-import ClientModal from "./components/ClientModal";
+import ClientCard from "../components/ClientCard";
+import ClientModal from "../components/ClientModal";
 import { auth, db } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 // import Footer from "./components/footer";
 import { useRouter } from "next/router";
-import Layout from "./components/layout";
+import Layout from "../components/layout";
 
 import {
   collection,

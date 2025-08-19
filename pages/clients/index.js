@@ -93,7 +93,7 @@
 // };
 
 import { useEffect, useState } from "react";
-import Layout from "../components/layout";
+import Layout from "../../components/layout";
 import { db } from "../../firebase";
 import jsPDF from "jspdf";
 import Link from "next/link";
