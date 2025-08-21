@@ -1,7 +1,7 @@
 // components/MLInsights.js
 import { useState, useEffect } from 'react';
 import { Brain, TrendingUp, AlertTriangle, CheckCircle, DollarSign, Calendar } from 'lucide-react';
-import mlService from "../utils/mlPredictionservice"
+import mlService from "../utils/mlPredictionsservice"
 
 export default function MLInsights({ clients }) {
   const [projectPredictions, setProjectPredictions] = useState([]);

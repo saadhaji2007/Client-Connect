@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import Layout from "../components/layout";
 import { Users, TrendingUp, BarChart3, Brain } from 'lucide-react';
 import Link from 'next/link';
-import mlService from "../utils/mlPredictionservice"
+import mlService from "../utils/mlPredictionsservice"
 
 import {
   collection,
