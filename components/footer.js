@@ -1,115 +1,144 @@
-// import Link from "next/link";
-// import { FaGithub, FaInstagram, FaLinkedin, FaXTwitter, FaDiscord, FaReddit } from "react-icons/fa6";
-// import { FaChartLine } from "react-icons/fa";
-
-// export default function Footer() {
-//   return (
-//     <footer className="bg-white text-gray-700 border-t border-gray-200 py-10 px-6 mt-16">
-//       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
-//         {/* Branding */}
-//         <div>
-//           <h2 className="text-xl font-bold text-purple-600">⚡ ClientConnect</h2>
-//           <p className="text-sm mt-2">
-//             The ultimate client management solution. <br />
-//             Track projects, generate invoices, and more.
-//           </p>
-//           <div className="flex space-x-4 mt-4 text-lg text-gray-600">
-//             <a href="https://x.com/yourprofile" target="_blank" rel="noreferrer"><FaXTwitter /></a>
-//             <a href="https://discord.com/yourprofile" target="_blank" rel="noreferrer"><FaDiscord /></a>
-//             <a href="https://reddit.com/yourprofile" target="_blank" rel="noreferrer"><FaReddit /></a>
-//             <a href="https://instagram.com/yourprofile" target="_blank" rel="noreferrer"><FaInstagram /></a>
-//             <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noreferrer"><FaLinkedin /></a>
-//             <a href="https://github.com/your-repo" target="_blank" rel="noreferrer"><FaGithub /></a>
-//             <Link href="/timeline"><FaChartLine /></Link>
-//           </div>
-//         </div>
-
-//         {/* Quick Links */}
-//         <div>
-//           <h3 className="font-semibold text-gray-900 mb-2">Quick Links</h3>
-//           <ul className="space-y-1 text-sm">
-//             <li><Link href="/" className="hover:text-purple-600">Home</Link></li>
-//             <li><Link href="/about" className="hover:text-purple-600">About</Link></li>
-//             <li><Link href="/faq" className="hover:text-purple-600">FAQ</Link></li>
-//             <li><Link href="/contact" className="hover:text-purple-600">Contact</Link></li>
-//           </ul>
-//         </div>
-
-//         {/* Resources */}
-//         <div>
-//           <h3 className="font-semibold text-gray-900 mb-2">Resources</h3>
-//           <ul className="space-y-1 text-sm">
-//             <li><Link href="/timeline" className="hover:text-purple-600">Roadmap</Link></li>
-//             <li><Link href="/terms" className="hover:text-purple-600">Terms of Service</Link></li>
-//             <li><Link href="/privacy" className="hover:text-purple-600">Privacy Policy</Link></li>
-//           </ul>
-//         </div>
-//       </div>
-
-//       <div className="border-t border-gray-200 mt-8 pt-4 text-center text-xs text-gray-500">
-//         &copy; 2025 ClientConnect. All rights reserved.
-//       </div>
-//     </footer>
-//   );
-// }
-
 import Link from "next/link";
-import {
-  FaGithub,
-  FaInstagram,
-  FaLinkedin,
-  FaXTwitter,
-  FaDiscord,
-  FaReddit,
-} from "react-icons/fa6";
-import { FaChartLine } from "react-icons/fa";
+import { FaGithub, FaInstagram, FaFacebook } from "react-icons/fa6";
+import { Mail, Phone, MapPin } from "lucide-react";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+  
+  const quickLinks = [
+    { href: "/", label: "Home" },
+    { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact" },
+    { href: "/faq", label: "FAQ" }
+  ];
+
+  const legalLinks = [
+    { href: "/terms", label: "Terms of Service" },
+    { href: "/privacy", label: "Privacy Policy" },
+  ];
+
+  const socialLinks = [
+    { 
+      href: "https://instagram.com/clientconnect", 
+      icon: FaInstagram, 
+      label: "Instagram",
+      color: "hover:text-pink-500" 
+    },
+    { 
+      href: "https://facebook.com/clientconnect", 
+      icon: FaFacebook, 
+      label: "Facebook",
+      color: "hover:text-blue-600" 
+    },
+    { 
+      href: "https://github.com/clientconnect", 
+      icon: FaGithub, 
+      label: "GitHub",
+      color: "hover:text-gray-900" 
+    }
+  ];
+
   return (
-    <footer className="bg-white text-gray-800 border-t border-gray-200 py-12 px-6 mt-16 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
-        {/* Branding */}
-        <div>
-          <h2 className="text-2xl font-bold text-purple-600 hover:text-purple-800 transition duration-300">⚡ ClientConnect</h2>
-          <p className="text-sm mt-3 text-gray-600">
-            Your all-in-one solution for smart client tracking, task management,
-            and project billing.
-          </p>
-          <div className="flex space-x-4 mt-5 text-xl text-gray-500 hover:text-purple-600 transition-all duration-300">
-            <a href="https://x.com/yourprofile" target="_blank" rel="noreferrer" className="hover:text-purple-600 transition duration-300"><FaXTwitter /></a>
-            <a href="https://discord.com/yourprofile" target="_blank" rel="noreferrer" className="hover:text-purple-600 transition duration-300"><FaDiscord /></a>
-            <a href="https://reddit.com/yourprofile" target="_blank" rel="noreferrer" className="hover:text-purple-600 transition duration-300"><FaReddit /></a>
-            <a href="https://instagram.com/yourprofile" target="_blank" rel="noreferrer" className="hover:text-purple-600 transition duration-300"><FaInstagram /></a>
-            <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noreferrer" className="hover:text-purple-600 transition duration-300"><FaLinkedin /></a>
-            <a href="https://github.com/your-repo" target="_blank" rel="noreferrer" className="hover:text-purple-600 transition duration-300"><FaGithub /></a>
-            <Link href="/timeline" className="hover:text-purple-600 transition duration-300"><FaChartLine /></Link>
+    <footer className="bg-gradient-to-br from-slate-50 to-white border-t border-slate-200 mt-16">
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Brand Section */}
+          <div className="lg:col-span-1">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">CC</span>
+              </div>
+              <h2 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                ClientConnect
+              </h2>
+            </div>
+            <p className="text-sm text-slate-600 mb-4 leading-relaxed">
+              Streamline your client management with our comprehensive platform for tracking, billing, and project management.
+            </p>
+            
+            {/* Social Links */}
+            <div className="flex gap-3">
+              {socialLinks.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-9 h-9 bg-slate-100 rounded-lg flex items-center justify-center text-slate-500 transition-all duration-200 ${social.color} hover:scale-110 hover:shadow-md`}
+                    aria-label={social.label}
+                  >
+                    <Icon size={16} />
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="font-semibold text-slate-900 mb-4">Quick Links</h3>
+            <ul className="space-y-2">
+              {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-slate-600 hover:text-blue-600 transition-colors duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Legal */}
+          <div>
+            <h3 className="font-semibold text-slate-900 mb-4">Legal</h3>
+            <ul className="space-y-2">
+              {legalLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-slate-600 hover:text-blue-600 transition-colors duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h3 className="font-semibold text-slate-900 mb-4">Contact</h3>
+            <div className="space-y-3 text-sm text-slate-600">
+              <div className="flex items-center gap-2">
+                <Mail size={14} className="text-slate-400" />
+                <span>saadpvt29@gmail.com</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Phone size={14} className="text-slate-400" />
+                <span>+91 7021928856</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin size={14} className="text-slate-400" />
+                <span>Mumbai</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Quick Links */}
-        <div>
-          <h3 className="font-semibold text-gray-900 mb-2 text-lg">Quick Links</h3>
-          <ul className="space-y-2 text-sm">
-            <li><Link href="/" className="hover:text-purple-600 transition duration-300">Home</Link></li>
-            <li><Link href="/about" className="hover:text-purple-600 transition duration-300">About</Link></li>
-            <li><Link href="/faq" className="hover:text-purple-600 transition duration-300">FAQ</Link></li>
-            <li><Link href="/contact" className="hover:text-purple-600 transition duration-300">Contact</Link></li>
-          </ul>
+        {/* Bottom Bar */}
+        <div className="border-t border-slate-200 mt-8 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-slate-500">
+            © {currentYear} ClientConnect. All rights reserved.
+          </p>
+          <p className="text-xs text-slate-400">
+            Made with ❤️ for better client management
+          </p>
         </div>
-
-        {/* Resources */}
-        <div>
-          <h3 className="font-semibold text-gray-900 mb-2 text-lg">Resources</h3>
-          <ul className="space-y-2 text-sm">
-            <li><Link href="/roadmap" className="hover:text-purple-600 transition duration-300">Roadmap</Link></li>
-            <li><Link href="/terms" className="hover:text-purple-600 transition duration-300">Terms of Service</Link></li>
-            <li><Link href="/privacy" className="hover:text-purple-600 transition duration-300">Privacy Policy</Link></li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="border-t border-gray-200 mt-10 pt-4 text-center text-xs text-gray-500">
-        &copy; 2025 ClientConnect. All rights reserved.
       </div>
     </footer>
   );
