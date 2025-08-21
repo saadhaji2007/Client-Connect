@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { db, auth } from "../firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import Layout from "../components/layout";
-import MLInsights from "../components/,mlinsights"
+import MLInsights from "../components/mlInsights"
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/router";
 import { Brain, BarChart3, TrendingUp, Users, DollarSign, AlertTriangle } from 'lucide-react';
